@@ -1,0 +1,39 @@
+{
+  "name": "music-booking",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./build/index.js",
+    "dev": "tsc-watch --onSuccess \"node ./build/index.js\"",
+    "build": "rimraf build && tsc -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wahlly/music-booking.git"
+  },
+  "keywords": [
+    "music",
+    "booking"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wahlly/music-booking/issues"
+  },
+  "homepage": "https://github.com/wahlly/music-booking#readme",
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.13.14",
+    "tsc-watch": "^6.2.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "mongodb": "^6.15.0",
+    "mongoose": "^8.13.1",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.2"
+  }
+}

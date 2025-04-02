@@ -21,7 +21,7 @@ export const userLoginService = async (payload: any) => {
     }
 
     if(await verifyPassword(password, user.password)) {
-        const credentials = tokenHandler(String(user._id))
+        const credentials = tokenHandler("user", String(user._id))
         return messageHandler(true, 'User logged-in successfully', statusCodes.SUCCESS, credentials)
     } else {
         return messageHandler(false, 'Wrong email or password', statusCodes.UNAUTHORIZED, {})

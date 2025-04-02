@@ -29,9 +29,16 @@ const verifyPassword = (password, dbPassword) => __awaiter(void 0, void 0, void 
     return yield bcrypt_1.default.compare(password, dbPassword);
 });
 exports.verifyPassword = verifyPassword;
-const tokenHandler = (userId) => {
-    var token = jsonwebtoken_1.default.sign({ userId: userId }, process.env.SECRET_KEY, { expiresIn: "1d" });
-    return { token, userId };
+/**
+ *
+ * @param userType ["user"|"artist"]
+ * @param userId
+ * @returns
+ */
+const tokenHandler = (userType, userId) => {
+    const id = userType == "user" ? "userId" : "artistId";
+    var token = jsonwebtoken_1.default.sign({ [`${id}`]: userId }, process.env.SECRET_KEY, { expiresIn: "1d" });
+    return { token, [`${id}`]: userId };
 };
 exports.tokenHandler = tokenHandler;
 const tokenVerifier = (req, res, next) => {

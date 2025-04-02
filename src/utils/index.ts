@@ -23,9 +23,16 @@ export const verifyPassword = async (password: string, dbPassword: string): Prom
       return await bcrypt.compare(password, dbPassword)
 }
 
-export const tokenHandler = (userId: string) => {
-      var token = jwt.sign({ userId: userId }, process.env.SECRET_KEY as string, {expiresIn: "1d"});
-      return { token, userId };
+/**
+ * 
+ * @param userType ["user"|"artist"]
+ * @param userId 
+ * @returns 
+ */
+export const tokenHandler = (userType: string, userId: string) => {
+      const id = userType == "user" ? "userId" : "artistId"
+      var token = jwt.sign({ [`${id}`]: userId }, process.env.SECRET_KEY as string, {expiresIn: "1d"});
+      return { token, [`${id}`]: userId };
 }
 
 declare module "express-serve-static-core" {

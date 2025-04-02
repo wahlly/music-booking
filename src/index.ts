@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
+import routes from './routes'
 const app = express();
 
 app.use(express.json());
@@ -21,3 +22,5 @@ mongoose
 app.listen(port, (): void => {
     console.log(`server is running on ${port}` )
 })
+
+routes(app)

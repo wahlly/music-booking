@@ -24,7 +24,8 @@ export const artistLoginController = async (req: Request, res: Response) => {
 
 export const getArtistProfileController = async (req: Request, res: Response) => {
       try {
-            const result = await getArtistProfileService(req.params.userId);
+            const source = req.originalUrl.split("/")[1] == "artist" ? "artist" : "user"
+            const result = await getArtistProfileService(source, req.params.artistId);
 
           res.status(result.statusCode).json(result)
       } catch (error: any) {

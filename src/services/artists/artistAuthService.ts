@@ -1,5 +1,6 @@
 import statusCodes from '../../constants/statusCodes'
 import { Artist, IArtist } from '../../models/artistModel'
+import { MusicEvent } from '../../models/eventModel'
 import { messageHandler, hashPassword, verifyPassword, tokenHandler } from '../../utils/index'
 
 
@@ -28,12 +29,18 @@ export const artistLoginService = async (payload: any) => {
     }
 }
 
-export const getArtistProfileService = async (artistId: string) => {
+export const getArtistProfileService = async (source: string, artistId: any) => {
     const artist: IArtist | null = await Artist.findById(artistId)
     if(artist == null) {
         return messageHandler(false, "Artist does not exist", statusCodes.BAD_REQUEST, {})
     }
     artist.password = ""
 
-    return messageHandler(true, "Artist found successfully", statusCodes.SUCCESS, artist)
+    if (source == "user") {
+      artist.wallet = {balance:0}
+    } 
+    const upcomingEvents = await MusicEvent.find({artistId: artist._id, status: "upcoming"})
+      .select({artistId: 0})
+
+    return messageHandler(true, "Artist found successfully", statusCodes.SUCCESS, {artist, upcomingEvents})
 }

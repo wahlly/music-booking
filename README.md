@@ -5,10 +5,10 @@
 The Music Booking Management API is a RESTful service that helps with the management of music events, handling artist profiles, event scheduling, and managing bookings and transaction history. It enhances interactions between event organizers, artists, and their fans, ensuring a seamless booking process.
 
 ## Setup
+- Clone the repo to your local.
 - Ensure you have **docker** and **docker compose** installed in your environment.
-- copy the contents in the ".env.example" file in the root dir, create a .env file in the root dir, and past the contents in it.
-- provide a test key for the paystack api, to be able to test the booking payment feature.
-- spin up the application by running **docker compose up**
+- Copy the contents in the ".env.example" file in the root dir, create a .env file in the root dir, and past the contents in it.
+- Spin up the application by running ***docker compose up***
 
 
 ## Technologies - Nodejs(typescript), MongoDB, Docker.

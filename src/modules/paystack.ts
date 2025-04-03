@@ -4,14 +4,11 @@ import { AlphaNumeric } from "../utils";
 interface IPaymentBody {
     amount: number
     email: string
-    currency?: string
-    metadata?: Record<string, any>;
+    reference: string
 };
 
-type PaystackResponse<T> = AxiosResponse<T> | undefined;
-
 const Paystack = () => {
-      const baseUrl: string = process.env.PAYSTACK_BASE_URL || ""
+      const baseUrl: string = String(process.env.PAYSTACK_BASE_URL)
       const key: string = String(process.env.PAYSTACK_SK_TEST_KEY)
     
       const headersRequest = {
@@ -20,15 +17,12 @@ const Paystack = () => {
             "Authorization": `Bearer ${key}`,
       };
 
-      const InitializePayment = async (body: IPaymentBody): Promise<PaystackResponse<any>> => {
+      const InitializePayment = async (body: IPaymentBody): Promise<any> => {
             try {
                   const response = await axios.post(
-                  `${baseUrl}/transaction/initialize`,
-                  {
-                        ...body,
-                        reference: AlphaNumeric(20).toUpperCase()
-                  },
-                  { headers: headersRequest }
+                        `${baseUrl}/transaction/initialize`,
+                        body,
+                        { headers: headersRequest }
                   );
                   return response;
             } catch (error: any) {
@@ -36,11 +30,11 @@ const Paystack = () => {
             }
       };
 
-      const VerifyPayment = async (reference: string): Promise<PaystackResponse<any>> => {
+      const VerifyPayment = async (reference: string): Promise<any> => {
             try {
                   const response = await axios.get(
-                  `${baseUrl}/transaction/verify/${reference}`,
-                  { headers: headersRequest }
+                        `${baseUrl}/transaction/verify/${reference}`,
+                        { headers: headersRequest }
                   );
                   return response;
             } catch (error: any) {

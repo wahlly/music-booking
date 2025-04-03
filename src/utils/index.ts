@@ -75,3 +75,8 @@ export const AlphaNumeric = (length: number, type = "alphaNumeric"): string => {
 
       return result
 }
+
+export const calculatePaystackServiceFee = (amount: number) => {
+      let processingCharges = amount < 2500 ? (0.015 * amount) : (0.015 * amount) + 100
+      return Math.round(processingCharges) > 2000 ? 2000 : Math.round(processingCharges)
+}

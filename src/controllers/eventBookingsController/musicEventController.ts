@@ -2,7 +2,9 @@ import statusCodes from "../../constants/statusCodes";
 import {
       newMusicEventService,
       initializeMusicEventBookingService,
-      completeMusicEventBookingService
+      completeMusicEventBookingService,
+      getMusicEventService,
+      getMusicEventsByParamService
 } from "../../services/eventBookings/musicEventService";
 import { Request, Response } from "express"
 
@@ -29,6 +31,26 @@ export const initializeMusicEventBookingController = async (req: Request, res: R
 export const completeMusicEventBookingController = async (req: Request, res: Response) => {
       try {
             const result = await completeMusicEventBookingService(req.body)
+
+            res.status(result.statusCode).json(result)
+      } catch (error: any) {
+            res.status(statusCodes.INTERNAL_SERVER_ERROR).json({ success: false, message: error.message })
+      }
+}
+
+export const getMusicEventController = async (req: Request, res: Response) => {
+      try {
+            const result = await getMusicEventService(req.params)
+
+            res.status(result.statusCode).json(result)
+      } catch (error: any) {
+            res.status(statusCodes.INTERNAL_SERVER_ERROR).json({ success: false, message: error.message })
+      }
+}
+
+export const getMusicEventsByParamController = async (req: Request, res: Response) => {
+      try {
+            const result = await getMusicEventsByParamService(req.query)
 
             res.status(result.statusCode).json(result)
       } catch (error: any) {

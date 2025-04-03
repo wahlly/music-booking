@@ -98,3 +98,31 @@ export const completeMusicEventBookingService = async(payload: Record<string, an
 
     return messageHandler(true, "Event booking completed successfully", statusCodes.SUCCESS, booking)
 }
+
+export const getMusicEventService = async (params: Record<string, any>) => {
+    const event = await MusicEvent.findById(params.eventId)
+    if(!event) {
+        return messageHandler(false, "Event not found", statusCodes.BAD_REQUEST, {})
+    }
+
+    return messageHandler(true, "Event found", statusCodes.SUCCESS, event)
+}
+
+export const getMusicEventsByParamService = async (query: Record<string, any>) => {
+    const searchParams = Object.keys(query)
+    if (searchParams.length > 3) {
+        return messageHandler(false, "One or more of queries are unsupported", statusCodes.BAD_REQUEST, {})
+    }
+    if(searchParams.length > 0) {
+        const supportedQueries = ["state", "hostArtist", "status"]
+        searchParams.forEach(k => {
+            if(!supportedQueries.includes(k)) {
+                return messageHandler(false, `'${k}' is not a supported query key`, statusCodes.BAD_REQUEST, {})
+            }
+        })
+    }
+
+    const events = await MusicEvent.find(query).lean()
+
+    return messageHandler(true, "Events fetched succesfully", statusCodes.SUCCESS, events)
+}

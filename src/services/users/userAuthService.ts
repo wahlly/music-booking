@@ -1,4 +1,6 @@
 import statusCodes from '../../constants/statusCodes'
+import { EventBooking } from '../../models/bookingModel'
+import { Transaction } from '../../models/transactionModel'
 import { User, IUser } from '../../models/userModel'
 import { messageHandler, hashPassword, verifyPassword, tokenHandler } from '../../utils/index'
 
@@ -36,4 +38,16 @@ export const getUserProfileService = async (userId: string) => {
     user.password = ""
 
     return messageHandler(true, "User found successfully", statusCodes.SUCCESS, user)
+}
+
+export const getUserBookingHistoryService = async (params: Record<string, any>) => {
+    const bookings = await EventBooking.find({userd: params.userId}).lean()
+
+    return messageHandler(true, "User booking history fetched successfully",statusCodes.SUCCESS, bookings)
+}
+
+export const getUserTransactionHistoryService = async (params: Record<string, any>) => {
+    const txns = await Transaction.find({userId: params.userId}).lean()
+
+    return messageHandler(true, "User transaction history fetched successfully", statusCodes.SUCCESS, txns)
 }

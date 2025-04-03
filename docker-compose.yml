@@ -1,5 +1,10 @@
 version: "3"
 services:
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - '27017:27017'
   app:
     build: .
     env_file:
@@ -7,12 +12,5 @@ services:
     ports:
       - "3000:3000"
     image: wahllywest/music-booking
-    links:
+    depends_on:
       - mongo
-  mongo:
-    container_name: mongo
-    image: mongo
-    volumes:
-      - ./mongodata:/mongodata/db
-    ports:
-      - '27017:27017'

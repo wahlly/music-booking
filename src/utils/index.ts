@@ -62,3 +62,16 @@ export const tokenVerifier = (req: Request, res: Response, next: NextFunction): 
             return res.status(statusCodes.UNAUTHORIZED).json({success: false, message: "Unauthorized, Access Denied", statusCode: 401, data: {}})
       }
 }
+
+export const AlphaNumeric = (length: number, type = "alphaNumeric"): string => {
+      let result = "";
+      const characters = type === "alphaNumeric" ? "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+            : type === "alpha" ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            : "0123456789";
+      const charactersLength = characters.length;
+      for (let i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+
+      return result
+}

@@ -1,14 +1,14 @@
-import { Schema, model, Document, Types } from 'mongoose'
+import { Schema, model, Document } from 'mongoose'
 
-interface IEvent extends Document {
-      artistId: Types.ObjectId,
+interface IMusicEvent extends Document {
+      artistId: Schema.Types.ObjectId,
       title: string
       venue: string
       country: string
       state: string
       ticketPrice: number
       date: string
-      hostArtiste: string
+      hostArtist: string
       guestArtist: string
       availableTickets: number
       soldTickets: number
@@ -16,13 +16,64 @@ interface IEvent extends Document {
       status: string
 }
 
-const eventSchema = new Schema<IEvent>({
+const musicEventSchema = new Schema<IMusicEvent>({
       artistId: {
-            type: Types.ObjectId,
+            type: Schema.Types.ObjectId,
             required: true,
             ref: "Artist"
       },
       title: {
-            
+            type: String,
+            required: true
+      },
+      venue: {
+            type: String,
+            required: true
+      },
+      country: {
+            type: String,
+            required: true
+      },
+      state: {
+            type: String,
+            required: true
+      },
+      ticketPrice: {
+            type: Number,
+            required: true
+      },
+      date: {
+            type: String,
+            required: true
+      },
+      hostArtist: {
+            type: String,
+            required: true
+      },
+      guestArtist: [{
+            type: String,
+            required: true
+      }],
+      availableTickets: {
+            type: Number,
+            required: true
+      },
+      soldTickets: {
+            type: Number,
+            default: 0
+      },
+      eventRef: {
+            type: String,
+            required: true
+      },
+      status: {
+            type: String,
+            enum: ["upcoming", "completed", "postponed", "cancelled"],
+            default: "upcoming",
+            required: true
       }
 })
+
+const MusicEvent = model<IMusicEvent>("Event", musicEventSchema, "musicEvents")
+
+export { MusicEvent, IMusicEvent }

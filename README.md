@@ -35,6 +35,6 @@ The Music Booking Management API is a RESTful service that helps with the manage
 
 ## Authentication
 
-The API uses jwt tokens for authenications, this is done by attaching 'Authorizaton: Bearer {token}'  to the Header. 
+The API uses jwt tokens for authentications, this is done by attaching 'Authorizaton: Bearer {token}'  to the Header. 
 
 POSTMAN DOCS - https://documenter.getpostman.com/view/25439414/2sB2cSi4fK
